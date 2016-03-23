@@ -1,46 +1,72 @@
-//
-//  AppDelegate.swift
-//  homework
-//
-//  Created by JUAN ANTONIO ROJAS HINOJOSA on 23/03/16.
-//  Copyright © 2016 JUAN ANTONIO ROJAS HINOJOSA. All rights reserved.
-//
+
+
+//: Tarea: Un velocímetro de un automóvil digital
+///
+/*
+¿El playground se encuentra en GitHub?
+¿El playground está hecho en Swift?
+¿Se declara la enumeración: Velocidades y sus valores de tipo Int.?
+¿Dentro de la enumeración Velocidades se cuenta con los elementos de: Apagado = 0, VelocidadBaja = 20, VelocidadMedia = 50 y VelocidadAlta = 120?
+¿La enumeración Velocidades, cumple con la función inicializadora:  init( velocidadInicial : Velocidades ) El inicializador se debe asignar a self el valor de velocidadInicial?
+¿Se declara la clase: Auto?
+¿La clase Auto cuenta con una instancia de la enumeración Velocidades, llamada: velocidad?
+¿La clase Auto implementa el método: init( )?
+¿La clase Auto implementa la función: func cambioDeVelocidad( ) -> ( actual : Int, velocidadEnCadena: String) y sus reglas de ejecución?
+¿Se realiza la prueba de la clase Auto, iterando 20 veces el método cambioDeVelocidad() y sus salidas se observan en la consola?*/
 
 import UIKit
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+enum Velocidades : Int {
+    
+    case Apagado = 0
+    case VelocidadBaja = 20
+    case VelocidadMedia = 50
+    case VelocidadAlta = 120
+    
+    init( velocidadInicial : Velocidades){
+        self = velocidadInicial
     }
-
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
-
 }
 
+class Auto{
+    var velocidad : Velocidades
+    
+    init(){
+        self.velocidad = Velocidades(velocidadInicial: .Apagado);
+    }
+    
+    func cambioDeVelocidad() -> (actual : Int, velocidadEnCadena : String){
+        
+        let velocidadActual = velocidad
+        var velocidadEnCadena : String
+        
+        switch velocidad{
+        case Velocidades.Apagado:
+            self.velocidad = Velocidades.VelocidadBaja
+            velocidadEnCadena = "Apagado"
+        case .VelocidadBaja:
+            self.velocidad = .VelocidadMedia
+            velocidadEnCadena = "Velocidad Baja"
+        case .VelocidadMedia:
+            self.velocidad = .VelocidadAlta
+            velocidadEnCadena = "Velocidad Media"
+        case .VelocidadAlta:
+            self.velocidad = .VelocidadMedia
+            velocidadEnCadena = "Velocidad Alta"
+        }
+        
+        return (velocidadActual.rawValue, velocidadEnCadena)
+    }
+    
+}
+
+var auto = Auto()
+
+for a in 1...20{
+    
+    let (velocidadActual , velocidadEnCadena) = auto.cambioDeVelocidad()
+    print("\(a). \(velocidadActual) , \(velocidadEnCadena)")
+    
+}
